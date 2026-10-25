@@ -2,44 +2,47 @@
 set -euo pipefail
 
 # Configuration
-API_KEY="${API_KEY:?API_KEY is not set}"
-API_URL="${API_URL:-https://api.openai.com/v1/chat/completions}"
-MODEL="${MODEL:-gpt-4o-mini}"
+: "${GEMINI_API_KEY:?GEMINI_API_KEY is not set}"
+MODEL="${GEMINI_MODEL:-gemini-3.8-flash}"
+API_URL="https://generativelanguage.googleapis.com/v1beta/interactions"
 
-# Get staged changes
+# Get staged diff
 DIFF=$(git diff --cached --no-ext-diff)
+[[ -n "$DIFF" ]] || { echo "No staged changes."; exit 1; }
 
-if [[ -z "$DIFF" ]]; then
-  echo "No staged changes. Run git add first."
-  exit 1
-fi
+# Build prompt
+PROMPT="Generate a concise Git commit message from the diff.
 
-# Generate request
-PROMPT="Write a concise Git commit message for this diff.
-- Use Conventional Commits format.
-- Subject: max 50 characters.
-- Body: optional, wrap at 72 characters.
+- Follow Conventional Commits (type(scope): description).
+- Use an imperative subject, max 50 characters, without a period.
+- Add a body only when necessary; wrap at 72 characters.
 - Output only the commit message.
 
 $DIFF"
 
-PAYLOAD=$(jq -n \
-  --arg model "$MODEL" \
-  --arg prompt "$PROMPT" \
-  '{
-    model: $model,
-    messages: [{role: "user", content: $prompt}]
-  }')
-
-# Request AI completion
+# Generate message
 echo "Generating commit message..."
 
 RESPONSE=$(curl -fsS "$API_URL" \
-  -H "Authorization: Bearer $API_KEY" \
+  -H "x-goog-api-key: $GEMINI_API_KEY" \
   -H "Content-Type: application/json" \
-  -d "$PAYLOAD")
+  -d "$(jq -n \
+    --arg model "$MODEL" \
+    --arg input "$PROMPT" \
+    '{
+    model: $model,
+    input: $input,
+    generation_config: {
+      thinking_level: "low",
+      thinking_summaries: "none"
+    }
+  }')")
 
-MESSAGE=$(jq -er '.choices[0].message.content' <<< "$RESPONSE")
+MESSAGE=$(jq -er '
+  [.steps[] | select(.type == "model_output") |
+   .content[] | select(.type == "text") | .text] | join("\n")
+  | select(length > 0)
+' <<< "$RESPONSE")
 
 # Review and commit
 TMPFILE=$(mktemp)
@@ -47,4 +50,3 @@ trap 'rm -f "$TMPFILE"' EXIT
 
 printf '%s\n' "$MESSAGE" > "$TMPFILE"
 git commit --edit -F "$TMPFILE"
-
