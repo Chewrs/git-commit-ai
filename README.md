@@ -38,8 +38,9 @@ bash ~/git-commit-ai/git-commit-ai.sh
 
 Review and edit the generated message in your Git editor, then save and close the editor to create the commit.
 
-### Fish shell alias
+### shell alias
 
+#### Fish
 Add this function to `~/.config/fish/config.fish`:
 
 ```fish
@@ -47,8 +48,32 @@ function gm
     bash ~/git-commit-ai/git-commit-ai.sh
 end
 ```
+Reload the fish shell:
 
-Run `gm` from any Git repository after staging your changes.
+```
+source ~/.config/fish/config.fish
+```
+#### Bash or Zsh alias
+
+Add this alias to `~/.bashrc` (Bash) or `~/.zshrc` (Zsh):
+
+```bash
+alias gm='bash ~/git-commit-ai/git-commit-ai.sh'
+```
+
+Reload your shell configuration:
+
+**Bash:**
+```bash
+source ~/.bashrc
+```
+
+**Zsh:**
+```bash
+source ~/.zshrc
+```
+
+Now run `gm` from any directory to execute the script.
 
 ## Optional: Set Neovim as the Git editor
 
