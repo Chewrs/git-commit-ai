@@ -1,39 +1,57 @@
-# Git commit with AI
-This project uses the Google Gemini to generate commit messages.
+# Git Commit AI
 
-## Installation and Usage
+Generate concise [Conventional Commit](https://www.conventionalcommits.org/) messages from staged Git changes using Google Gemini. The generated message opens in your Git editor for review before the commit is created.
 
-1. Clone this project
-```
+## Requirements
+
+- Bash
+- Git
+- `curl`
+- `jq`
+- A [Gemini API key](https://aistudio.google.com/apps)
+
+## Setup
+
+```sh
 git clone https://github.com/che/git-commit-ai.git ~/git-commit-ai
 cd ~/git-commit-ai
+chmod +x git-commit-ai.sh
 ```
-2. Export variables
-```
+
+Set your Gemini API key. `GEMINI_MODEL` is optional and defaults to `gemini-3.8-flash`.
+
+```sh
 export GEMINI_API_KEY="your-api-key"
 export GEMINI_MODEL="gemini-3.8-flash"
 ```
-3. add files to git
-for example
-```
+
+See the [Gemini API documentation](https://aistudio.google.com/docs?codelanguage=rest) for API details.
+
+## Usage
+
+Stage your changes, then run the script:
+
+```sh
 git add .
-```
-4. Run the script 
-```
-chmod +x git-commit-ai.sh
-bash git-commit-ai.sh
+bash ~/git-commit-ai/git-commit-ai.sh
 ```
 
-5. Set aliases on fish shell
-```
+Review and edit the generated message in your Git editor, then save and close the editor to create the commit.
+
+### Fish shell alias
+
+Add this function to `~/.config/fish/config.fish`:
+
+```fish
 function gm
     bash ~/git-commit-ai/git-commit-ai.sh
 end
 ```
 
-## Others
+Run `gm` from any Git repository after staging your changes.
 
-Set git editor to nvim
-```
+## Optional: Set Neovim as the Git editor
+
+```sh
 git config --global core.editor "nvim"
 ```
