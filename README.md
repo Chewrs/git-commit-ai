@@ -38,9 +38,9 @@ bash ~/git-commit-ai/git-commit-ai.sh
 
 Review and edit the generated message in your Git editor, then save and close the editor to create the commit.
 
-### shell alias
+## Shell alias
 
-#### Fish
+### Fish alias
 Add this function to `~/.config/fish/config.fish`:
 
 ```fish
@@ -53,7 +53,7 @@ Reload the fish shell:
 ```
 source ~/.config/fish/config.fish
 ```
-#### Bash or Zsh alias
+### Bash or Zsh alias
 
 Add this alias to `~/.bashrc` (Bash) or `~/.zshrc` (Zsh):
 
