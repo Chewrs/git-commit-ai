@@ -11,7 +11,7 @@ DIFF=$(git diff --cached --no-ext-diff)
 [[ -n "$DIFF" ]] || { echo "No staged changes."; exit 1; }
 
 # Build prompt
-PROMPT="PROMPT="Generate a concise Git commit message from the diff.
+PROMPT="Generate a concise Git commit message from the diff.
 
 - Follow Conventional Commits (type(scope): description).
 - Describe the actual changes and their purpose.
