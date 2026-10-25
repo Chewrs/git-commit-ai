@@ -6,8 +6,8 @@ Generate concise [Conventional Commit](https://www.conventionalcommits.org/) mes
 
 - Bash
 - Git
-- `curl`
-- `jq`
+- curl
+- jq (Pi installation: `sudo apt install jq`)
 - A [Gemini API key](https://aistudio.google.com/apps)
 
 ## Setup
@@ -18,7 +18,7 @@ cd ~/git-commit-ai
 chmod +x git-commit-ai.sh
 ```
 
-Set your Gemini API key. `GEMINI_MODEL` is optional and defaults to `gemini-3.8-flash`.
+Set your Gemini API key. `GEMINI_MODEL` is optional and defaults to `gemini-3.1-flash-lite`.
 
 ```sh
 export GEMINI_API_KEY="your-api-key"
