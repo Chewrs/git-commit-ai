@@ -8,7 +8,7 @@ Generate concise [Conventional Commit](https://www.conventionalcommits.org/) mes
 - Git
 - curl
 - jq
-- A [Gemini API key](https://ai.google.dev/gemini-api/docs/api-key)
+- A [Gemini API key](https://aistudio.google.com/api-keys)
 
 ## Installation
 
