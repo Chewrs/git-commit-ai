@@ -11,9 +11,11 @@ DIFF=$(git diff --cached --no-ext-diff)
 [[ -n "$DIFF" ]] || { echo "No staged changes."; exit 1; }
 
 # Build prompt
-PROMPT="Generate a concise Git commit message from the diff.
+PROMPT="PROMPT="Generate a concise Git commit message from the diff.
 
 - Follow Conventional Commits (type(scope): description).
+- Describe the actual changes and their purpose.
+- Be specific; avoid generic descriptions like 'update README' or 'fix bugs'.
 - Use an imperative subject, max 50 characters, without a period.
 - Add a body only when necessary; wrap at 72 characters.
 - Output only the commit message.
