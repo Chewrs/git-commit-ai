@@ -1,16 +1,16 @@
 # Git Commit AI
 
-Generate concise [Conventional Commit](https://www.conventionalcommits.org/) messages from staged Git changes using Google Gemini. The generated message opens in your Git editor for review before the commit is created.
+Generate concise [Conventional Commit](https://www.conventionalcommits.org/) messages from staged changes with Google Gemini. Review or edit each message in your Git editor before committing.
 
 ## Requirements
 
 - Bash
 - Git
 - curl
-- jq (Pi installation: `sudo apt install jq`)
-- A [Gemini API key](https://aistudio.google.com/apps)
+- jq
+- A [Gemini API key](https://ai.google.dev/gemini-api/docs/api-key)
 
-## Setup
+## Installation
 
 ```sh
 git clone https://github.com/che/git-commit-ai.git ~/git-commit-ai
@@ -18,64 +18,55 @@ cd ~/git-commit-ai
 chmod +x git-commit-ai.sh
 ```
 
-Set your Gemini API key. `GEMINI_MODEL` is optional and defaults to `gemini-3.1-flash-lite`.
+Set your API key:
 
 ```sh
 export GEMINI_API_KEY="your-api-key"
-export GEMINI_MODEL="gemini-3.8-flash"
 ```
 
-See the [Gemini API documentation](https://aistudio.google.com/docs?codelanguage=rest) for API details.
+The script uses `gemini-3.1-flash-lite` by default. Set `GEMINI_MODEL` to use another model:
+
+```sh
+export GEMINI_MODEL="model-name"
+```
 
 ## Usage
 
-Stage your changes, then run the script:
+Stage your changes and run:
 
 ```sh
 git add .
-bash ~/git-commit-ai/git-commit-ai.sh
+~/git-commit-ai/git-commit-ai.sh
 ```
 
-Review and edit the generated message in your Git editor, then save and close the editor to create the commit.
+Save and close the editor to create the commit.
 
-## Shell alias
+## Aliases
 
-### Fish alias
-Add this function to `~/.config/fish/config.fish`:
+For Bash or Zsh, add this to `~/.bashrc` or `~/.zshrc`:
+
+```sh
+alias gm='~/git-commit-ai/git-commit-ai.sh'
+```
+
+For Fish, add this to `~/.config/fish/config.fish`:
 
 ```fish
-function gm
-    bash ~/git-commit-ai/git-commit-ai.sh
-end
-```
-Reload the fish shell:
-
-```
-source ~/.config/fish/config.fish
-```
-### Bash or Zsh alias
-
-Add this alias to `~/.bashrc` (Bash) or `~/.zshrc` (Zsh):
-
-```bash
-alias gm='bash ~/git-commit-ai/git-commit-ai.sh'
+alias gm '~/git-commit-ai/git-commit-ai.sh'
 ```
 
-Reload your shell configuration:
+Reload the shell configuration, then run `gm` from any Git repository.
 
-**Bash:**
-```bash
-source ~/.bashrc
+## Optional: Raspberry Pi dependencies
+
+On Raspberry Pi OS, install `curl` and `jq` if they are not already installed:
+
+```sh
+sudo apt update
+sudo apt install curl jq
 ```
 
-**Zsh:**
-```bash
-source ~/.zshrc
-```
-
-Now run `gm` from any directory to execute the script.
-
-## Optional: Set Neovim as the Git editor
+## Optional: Git editor
 
 ```sh
 git config --global core.editor "nvim"
