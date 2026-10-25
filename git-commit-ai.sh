@@ -3,7 +3,7 @@ set -euo pipefail
 
 # Configuration
 : "${GEMINI_API_KEY:?GEMINI_API_KEY is not set}"
-MODEL="${GEMINI_MODEL:-gemini-3.8-flash}"
+MODEL="${GEMINI_MODEL:-gemini-3.1-flash-lite}"
 API_URL="https://generativelanguage.googleapis.com/v1beta/interactions"
 
 # Get staged diff
