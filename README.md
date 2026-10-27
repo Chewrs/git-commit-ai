@@ -24,6 +24,7 @@ Set your API key:
 export GEMINI_API_KEY="your-api-key"
 ```
 
+
 The script uses `gemini-3.1-flash-lite` by default. Set `GEMINI_MODEL` to use another model:
 
 ```sh
@@ -70,4 +71,12 @@ sudo apt install curl jq
 
 ```sh
 git config --global core.editor "nvim"
+```
+
+## Optional: Set a permanent Gemini API key
+
+add this to `~/.bashrc` or `~/.zshrc` or `~/.config/fish/config.fish`:
+
+```sh
+export GEMINI_API_KEY="your-api-key"
 ```
