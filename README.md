@@ -13,7 +13,7 @@ Generate concise [Conventional Commit](https://www.conventionalcommits.org/) mes
 ## Installation
 
 ```sh
-git clone https://github.com/che/git-commit-ai.git ~/git-commit-ai
+git clone https://github.com/Chewrs/git-commit-ai.git ~/git-commit-ai
 cd ~/git-commit-ai
 chmod +x git-commit-ai.sh
 ```
